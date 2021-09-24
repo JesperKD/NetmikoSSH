@@ -111,11 +111,22 @@ def setup_snmp():
     print("Time elapsed: {}".format(end_time - start_time))
 
 
-def main_switch_case(choice):
+def catch_traps():
+    print("Undefined function")
+
+
+def main_switch_case():
+    print("What do you wish to do?: \n")
+    choice = input("A. Show device info.\n"
+                   "B. Change the device config.\n"
+                   "C. Catch traps.\n")
+
     if choice == 'a':
         show_switch_case()
     elif choice == 'b':
         change_switch_case()
+    elif choice == 'c':
+        catch_traps()
 
 
 def show_switch_case():
@@ -147,8 +158,4 @@ def change_switch_case():
         print(setup_snmp())
 
 
-print("What do you wish to do?: \n")
-userChoice = input("A. Show device info.\n"
-                   "B. Change the device config.\n")
-
-main_switch_case(userChoice)
+main_switch_case()
