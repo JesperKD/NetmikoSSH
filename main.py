@@ -1,8 +1,8 @@
+import os
 from datetime import datetime
 import pysnmp.entity.engine
 from netmiko import Netmiko
 from pysnmp.hlapi import *
-import os
 
 client_ip = "10.0.3.24"
 
