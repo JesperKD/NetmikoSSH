@@ -4,10 +4,11 @@ import pysnmp.entity.engine
 from netmiko import Netmiko
 from pysnmp.hlapi import *
 
-client_ip = "10.0.3.24"
+device_ip = "10.0.3.24"
+client_ip = "10.0.3.15"
 
 my_device = {
-    'host': f"{client_ip}",
+    'host': f"{device_ip}",
     'username': "ciscoclass",
     'password': "kage",
     'secret': "class",
@@ -144,8 +145,6 @@ def show_switch_case():
         show_ip_int()
     elif choice == 'd':
         mib_interface_table()
-    elif choice == 'u':
-        mib_uptime()
 
 
 def change_switch_case():
