@@ -2,6 +2,7 @@ from datetime import datetime
 import pysnmp.entity.engine
 from netmiko import Netmiko
 from pysnmp.hlapi import *
+import os
 
 client_ip = "10.0.3.24"
 
@@ -112,7 +113,7 @@ def setup_snmp():
 
 
 def catch_traps():
-    print("Undefined function")
+    os.system('python SNMPTrapReceiver.py')
 
 
 def main_switch_case():
