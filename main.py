@@ -1,8 +1,12 @@
 from datetime import datetime
+import pysnmp.entity.engine
 from netmiko import Netmiko
+from pysnmp.hlapi import *
+
+client_ip = "10.0.3.24"
 
 my_device = {
-    'host': "10.0.3.24",
+    'host': f"{client_ip}",
     'username': "ciscoclass",
     'password': "kage",
     'secret': "class",
@@ -11,21 +15,54 @@ my_device = {
 
 
 def show_running_config():
+    start_time = datetime.now()
     net_conn = Netmiko(**my_device)
+    net_conn.enable()
     print("Connected to device\n")
     print(net_conn.send_command_timing("show running-config"))
+    end_time = datetime.now()
+    print("Time elapsed: {}".format(end_time - start_time))
 
 
 def show_vlan_br():
+    start_time = datetime.now()
     net_conn = Netmiko(**my_device)
+    net_conn.enable()
     print("Connected to device\n")
     print(net_conn.send_command_timing("show vlan brief"))
+    end_time = datetime.now()
+    print("Time elapsed: {}".format(end_time - start_time))
 
 
 def show_ip_int():
+    start_time = datetime.now()
     net_conn = Netmiko(**my_device)
+    net_conn.enable()
     print("Connected to device\n")
     print(net_conn.send_command_timing("show ip int br"))
+    end_time = datetime.now()
+    print("Time elapsed: {}".format(end_time - start_time))
+
+
+def cb_fun(snmp_engine, send_request_handle, error_indication, error_status, error_index, var_binds, cb_ctx):
+    print(error_indication, error_status, error_index, var_binds)
+
+
+def mib_interface_table():
+    start_time = datetime.now()
+    error_indication, error_status, error_index, var_bind_table = cmdGen.bulkCmd(
+        cmdgen.CommunityData('private'),
+        cmdgen.UdpTransportTarget(("10.0.3.24", 161)),
+        0, 25,
+        '1.3.6.1.2.1.2.2.1.2'
+    )
+
+    for var_bind_table_row in var_bind_table:
+        for name, val in var_bind_table_row:
+            print('%s = Interface Name: %s' % (name.prettyPrint(), val.prettyPrint()))
+
+    end_time = datetime.now()
+    print("Time elapsed: {}".format(end_time - start_time))
 
 
 def create_vlan():
@@ -54,6 +91,26 @@ def create_vlan():
     print("Time elapsed: {}".format(end_time - start_time))
 
 
+def setup_snmp():
+    start_time = datetime.now()
+    net_conn = Netmiko(**my_device)
+    net_conn.enable()
+    config_commands = [
+        f"snmp-server community public RO",
+        f"snmp-server community private RW",
+        f"snmp-server host {client_ip} informs version 2c public",
+        f"snmp-server host {client_ip} traps version 2c public",
+        f"snmp-server enable traps bgp",
+        f"logging trap 7"
+    ]
+
+    output = net_conn.send_config_set(config_commands)
+    print(output + "\n SNMP has now been configured.")
+
+    end_time = datetime.now()
+    print("Time elapsed: {}".format(end_time - start_time))
+
+
 def main_switch_case(choice):
     if choice == 'a':
         show_switch_case()
@@ -73,13 +130,21 @@ def show_switch_case():
         show_vlan_br()
     elif choice == 'c':
         show_ip_int()
+    elif choice == 'd':
+        mib_interface_table()
+    elif choice == 'u':
+        mib_uptime()
 
 
 def change_switch_case():
+    print("What do you wish to configure?:\n")
+    choice = input("A. create a new vlan\n"
+                   "B. Add SNMP to device\n")
+
     if choice == 'a':
-        print("bruh")
+        print(create_vlan())
     elif choice == 'b':
-        print("bruh")
+        print(setup_snmp())
 
 
 print("What do you wish to do?: \n")
@@ -87,4 +152,3 @@ userChoice = input("A. Show device info.\n"
                    "B. Change the device config.\n")
 
 main_switch_case(userChoice)
-
