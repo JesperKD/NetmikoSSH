@@ -1,8 +1,8 @@
 import os
-from datetime import datetime
-import pysnmp.entity.engine
-from netmiko import Netmiko
 from pysnmp.hlapi import *
+from netmiko import Netmiko
+import pysnmp.entity.engine
+from datetime import datetime
 
 device_ip = "10.0.3.24"
 client_ip = "10.0.3.15"
@@ -135,7 +135,8 @@ def show_switch_case():
     print("What do you wish to see?:\n")
     choice = input("A. Show the entire running-config.\n"
                    "B. Show the VLANs.\n"
-                   "C. Show the IP setup.\n")
+                   "C. Show the IP setup.\n"
+                   "D. show the mib Interface Table.\n")
 
     if choice.lower() == 'a':
         show_running_config()
