@@ -63,7 +63,7 @@ def create_vlan(number, ip, mask):
         net_conn = Netmiko(**my_device)
         net_conn.enable()
 
-        print("creating vlan {}".format(num))
+        print("creating vlan {}".format(number))
 
         config_commands = [
             f"interface vlan {number}",
@@ -71,9 +71,11 @@ def create_vlan(number, ip, mask):
             "no shutdown"
         ]
         output = net_conn.send_config_set(config_commands)
-        return output + "\n creation of vlan has concluded."
+        print(output + "\n creation of vlan has concluded.")
+        return True
     except:
         print("Creation of VLAN failed")
+        return False
 
 
 def setup_snmp():
