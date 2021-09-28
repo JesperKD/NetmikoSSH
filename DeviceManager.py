@@ -114,4 +114,3 @@ def setup_snmp(ro_name, rw_name):
 
 def catch_traps():
     os.system('python SNMPTrapReceiver.py')
-    
