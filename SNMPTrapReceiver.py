@@ -1,10 +1,10 @@
 # python snmp trap receiver
-from pysnmp.entity import engine, config
-from pysnmp.carrier.asyncore.dgram import udp
-from pysnmp.entity.rfc3413 import ntfrcv
+import os
 import logging
 from datetime import date
-import os
+from pysnmp.entity import engine, config
+from pysnmp.entity.rfc3413 import ntfrcv
+from pysnmp.carrier.asyncore.dgram import udp
 
 snmpEngine = engine.SnmpEngine()
 
