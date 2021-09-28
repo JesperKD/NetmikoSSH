@@ -114,47 +114,4 @@ def setup_snmp(ro_name, rw_name):
 
 def catch_traps():
     os.system('python SNMPTrapReceiver.py')
-
-
-"""
-def main_switch_case():
-    print("What do you wish to do?: \n")
-    choice = input("A. Show device info.\n"
-                   "B. Change the device config.\n"
-                   "C. Catch traps.\n")
-
-    if choice == 'a':
-        show_switch_case()
-    elif choice == 'b':
-        change_switch_case()
-    elif choice == 'c':
-        catch_traps()
-
-
-def show_switch_case():
-    print("What do you wish to see?:\n")
-    choice = input("A. Show the entire running-config.\n"
-                   "B. Show the VLANs.\n"
-                   "C. Show the IP setup.\n"
-                   "D. show the mib Interface Table.\n")
-
-    if choice.lower() == 'a':
-        show_running_config()
-    elif choice == 'b':
-        show_vlan_br()
-    elif choice == 'c':
-        show_ip_int()
-    elif choice == 'd':
-        mib_interface_table()
-
-
-def change_switch_case():
-    print("What do you wish to configure?:\n")
-    choice = input("A. create a new vlan\n"
-                   "B. Add SNMP to device\n")
-
-    if choice == 'a':
-        print(create_vlan())
-    elif choice == 'b':
-        print(setup_snmp())
-"""
+    
