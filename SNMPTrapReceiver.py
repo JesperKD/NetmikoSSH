@@ -15,10 +15,12 @@ TrapAgentAddress = '10.0.3.15'  # Trap listener address
 if not os.path.isfile(f'./received_traps_{date.today().year}_{date.today().month}_{date.today().day}.log'):
     print('New file created!')
     # Creates a new log file for the current day
-    with open(f'received_traps_{str(date.today().year)}_{str(date.today().month)}_{str(date.today().day)}.log', 'w') as f:
+    with open(f'received_traps_{str(date.today().year)}_{str(date.today().month)}_{str(date.today().day)}.log',
+              'w') as f:
         f.write('Create a new text file!')
 
-logging.basicConfig(filename=f'received_traps_{date.today().year}_{date.today().month}_{date.today().day}.log', filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
+logging.basicConfig(filename=f'received_traps_{date.today().year}_{date.today().month}_{date.today().day}.log',
+                    filemode='a', format='%(asctime)s - %(message)s', level=logging.INFO)
 
 logging.info(f'Agent is listening SNMP Trap on {TrapAgentAddress} , Port : {str(Port)}')
 logging.info('--------------------------------------------------------------------------\n')

@@ -7,8 +7,7 @@ from DeviceManager import show_vlan_br
 from DeviceManager import check_connection
 from DeviceManager import show_running_config
 
-
-LARGE_FONT = ("Verdana", 12)
+LARGE_FONT = ("Verdana", 16)
 
 
 class WindowControl(tk.Tk):
