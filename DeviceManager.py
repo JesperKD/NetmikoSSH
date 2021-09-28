@@ -104,6 +104,7 @@ def catch_traps():
     os.system('python SNMPTrapReceiver.py')
 
 
+"""
 def main_switch_case():
     print("What do you wish to do?: \n")
     choice = input("A. Show device info.\n"
@@ -144,3 +145,4 @@ def change_switch_case():
         print(create_vlan())
     elif choice == 'b':
         print(setup_snmp())
+"""
