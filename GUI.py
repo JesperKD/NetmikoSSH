@@ -4,6 +4,7 @@ from DeviceManager import setup_snmp
 from DeviceManager import create_vlan
 from DeviceManager import show_ip_int
 from DeviceManager import show_vlan_br
+from DeviceManager import check_connection
 from DeviceManager import show_running_config
 
 
@@ -23,7 +24,7 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage,
+        for F in (StartPage, MenuPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage,
                   CreateVlanPage, SetupSNMPPage):
             frame = F(container, self)
 
@@ -39,10 +40,44 @@ class WindowControl(tk.Tk):
 
 
 class StartPage(tk.Frame):
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         label = tk.Label(self, text="Start Page", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        lbl_client_ip = tk.Label(self, text="Client IP")
+        ent_client_ip = tk.Entry(self)
+        lbl_client_ip.pack()
+        ent_client_ip.pack()
+
+        lbl_device_ip = tk.Label(self, text="Device IP")
+        ent_device_ip = tk.Entry(self)
+        lbl_device_ip.pack()
+        ent_device_ip.pack()
+
+        confirm_btn = tk.Button(self, text="Confirm",
+                                command=lambda: confirm_connection(confirm_btn, continue_btn, ent_client_ip.get(),
+                                                                   ent_device_ip.get()))
+        confirm_btn.pack()
+
+        continue_btn = tk.Button(self, text="Continue",
+                                 command=lambda: controller.show_frame(MenuPage))
+
+
+def confirm_connection(confirm_btn, continue_btn, cli_ip, dev_ip):
+    if check_connection(dev_ip, cli_ip):
+        continue_btn.pack()
+        confirm_btn.pack_forget()
+        return messagebox.showinfo('message', f'Connection confirmed!')
+    else:
+        return messagebox.showinfo('message', f'Connection failed, try again.')
+
+
+class MenuPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Menu", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
         button = tk.Button(self, text="Information Page",
@@ -62,7 +97,7 @@ class InfoPage(tk.Frame):
         label.pack(pady=10, padx=10)
 
         button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
+                            command=lambda: controller.show_frame(MenuPage))
         button1.pack()
 
         button2 = tk.Button(self, text="Show Running Config",
@@ -86,7 +121,7 @@ class ConfigPage(tk.Frame):
         label.pack(pady=10, padx=10)
 
         button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
+                            command=lambda: controller.show_frame(MenuPage))
         button1.pack()
 
         button2 = tk.Button(self, text="Create Vlan",

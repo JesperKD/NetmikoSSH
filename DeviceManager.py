@@ -16,6 +16,19 @@ my_device = {
 }
 
 
+def check_connection(dev_ip, cli_ip):
+    try:
+        global device_ip
+        global client_ip
+        device_ip = dev_ip
+        client_ip = cli_ip
+        net_conn = Netmiko(**my_device)
+        net_conn.enable()
+        return True
+    except:
+        return False
+
+
 def show_running_config():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
