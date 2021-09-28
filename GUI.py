@@ -105,15 +105,27 @@ class ShowRunConfigPage(tk.Frame):
         label = tk.Label(self, text="Running Configuration", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        conf_string = show_running_config()
-
         txt_box = tk.Text(self)
-        txt_box.insert(1.0, conf_string)
+        txt_box.config(state="normal")
         txt_box.pack()
+
+        update_btn = tk.Button(self, text="Update",
+                               command=lambda: update_txt_box(txt_box, 1))
+        update_btn.pack()
 
         button1 = tk.Button(self, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
         button1.pack()
+
+
+def update_txt_box(txt_box, type):
+    txt_box.delete('1.0', tk.END)
+    if type == 1:
+        txt_box.insert(1.0, show_running_config())
+    elif type == 2:
+        txt_box.insert(1.0, show_ip_int())
+    elif type == 3:
+        txt_box.insert(1.0, show_vlan_br())
 
 
 class ShowIPConfigPage(tk.Frame):
@@ -123,11 +135,13 @@ class ShowIPConfigPage(tk.Frame):
         label = tk.Label(self, text="IP Configuration", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        conf_string = show_ip_int()
-
         txt_box = tk.Text(self)
-        txt_box.insert(1.0, conf_string)
+        txt_box.config(state="normal")
         txt_box.pack()
+
+        update_btn = tk.Button(self, text="Update",
+                               command=lambda: update_txt_box(txt_box, 2))
+        update_btn.pack()
 
         button1 = tk.Button(self, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
@@ -141,11 +155,13 @@ class ShowVlanConfigPage(tk.Frame):
         label = tk.Label(self, text="IP Configuration", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        conf_string = show_vlan_br()
-
         txt_box = tk.Text(self)
-        txt_box.insert(1.0, conf_string)
+        txt_box.config(state="normal")
         txt_box.pack()
+
+        update_btn = tk.Button(self, text="Update",
+                               command=lambda: update_txt_box(txt_box, 3))
+        update_btn.pack()
 
         button1 = tk.Button(self, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
