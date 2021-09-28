@@ -16,11 +16,15 @@ my_device = {
 }
 
 
-def show_running_config():
-    start_time = datetime.now()
+def connect_and_enable():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
     print("Connected to device\n")
+
+
+def show_running_config():
+    start_time = datetime.now()
+    connect_and_enable()
     print(net_conn.send_command_timing("show running-config"))
     end_time = datetime.now()
     print("Time elapsed: {}".format(end_time - start_time))
@@ -28,9 +32,7 @@ def show_running_config():
 
 def show_vlan_br():
     start_time = datetime.now()
-    net_conn = Netmiko(**my_device)
-    net_conn.enable()
-    print("Connected to device\n")
+    connect_and_enable()
     print(net_conn.send_command_timing("show vlan brief"))
     end_time = datetime.now()
     print("Time elapsed: {}".format(end_time - start_time))
@@ -38,9 +40,7 @@ def show_vlan_br():
 
 def show_ip_int():
     start_time = datetime.now()
-    net_conn = Netmiko(**my_device)
-    net_conn.enable()
-    print("Connected to device\n")
+    connect_and_enable()
     print(net_conn.send_command_timing("show ip int br"))
     end_time = datetime.now()
     print("Time elapsed: {}".format(end_time - start_time))
@@ -74,10 +74,7 @@ def create_vlan():
 
     start_time = datetime.now()
 
-    net_conn = Netmiko(**my_device)
-    print("Connected to device\n")
-
-    net_conn.enable()
+    connect_and_enable()
 
     print("creating vlan {}".format(num))
 
@@ -95,8 +92,7 @@ def create_vlan():
 
 def setup_snmp():
     start_time = datetime.now()
-    net_conn = Netmiko(**my_device)
-    net_conn.enable()
+    connect_and_enable()
     config_commands = [
         f"snmp-server community public RO",
         f"snmp-server community private RW",
@@ -159,4 +155,30 @@ def change_switch_case():
         print(setup_snmp())
 
 
-main_switch_case()
+class WindowControl(tk.Tk):
+
+    def __init__(self, *args, **kwargs):
+        tk.Tk.__init__(self, *args, **kwargs)
+        container = tk.Frame(self)
+
+        container.pack(side="top", fill="both", expand=True)
+
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+
+        for F in (StartPage, PageOne, PageTwo):
+            frame = F(container, self)
+
+            self.frames[F] = frame
+
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.show_frame(StartPage)
+
+    def show_frame(self, cont):
+        frame = self.frames[cont]
+        frame.tkraise()
+
+
