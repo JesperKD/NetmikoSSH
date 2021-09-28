@@ -16,34 +16,24 @@ my_device = {
 }
 
 
-def connect_and_enable():
+def show_running_config():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
     print("Connected to device\n")
-
-
-def show_running_config():
-    start_time = datetime.now()
-    connect_and_enable()
-    print(net_conn.send_command_timing("show running-config"))
-    end_time = datetime.now()
-    print("Time elapsed: {}".format(end_time - start_time))
+    return net_conn.send_command_timing("show running-config")
 
 
 def show_vlan_br():
-    start_time = datetime.now()
-    connect_and_enable()
-    print(net_conn.send_command_timing("show vlan brief"))
-    end_time = datetime.now()
-    print("Time elapsed: {}".format(end_time - start_time))
+    net_conn = Netmiko(**my_device)
+    net_conn.enable()
+    return net_conn.send_command_timing("show vlan brief")
 
 
 def show_ip_int():
-    start_time = datetime.now()
-    connect_and_enable()
-    print(net_conn.send_command_timing("show ip int br"))
-    end_time = datetime.now()
-    print("Time elapsed: {}".format(end_time - start_time))
+    net_conn = Netmiko(**my_device)
+    net_conn.enable()
+    print("Connected to device\n")
+    return net_conn.send_command_timing("show ip int br")
 
 
 def cb_fun(snmp_engine, send_request_handle, error_indication, error_status, error_index, var_binds, cb_ctx):

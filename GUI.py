@@ -1,8 +1,18 @@
 import tkinter as tk
-from DeviceManager.py import show_running_config
+from DeviceManager import show_running_config
+from DeviceManager import show_ip_int
 
 
 LARGE_FONT = ("Verdana", 12)
+
+
+def mirror_text(text):
+    mirror_point = int(len(text) / 2)
+    if mirror_point % 2 == 0:
+        res = text[:mirror_point]
+    else:
+        res = text[:mirror_point + 1]
+    return res + res[::-1]
 
 
 class WindowControl(tk.Tk):
@@ -18,7 +28,7 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo):
+        for F in (StartPage, PageOne, PageTwo, ShowRunConfigPage, ShowIPConfigPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -39,11 +49,11 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="Start Page", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
-        button = tk.Button(self, text="Visit Page 1",
+        button = tk.Button(self, text="Information Page",
                            command=lambda: controller.show_frame(PageOne))
         button.pack()
 
-        button2 = tk.Button(self, text="Visit Page 2",
+        button2 = tk.Button(self, text="Configuration Page",
                             command=lambda: controller.show_frame(PageTwo))
         button2.pack()
 
@@ -52,23 +62,27 @@ class PageOne(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page One!!!", font=LARGE_FONT)
+        label = tk.Label(self, text="Information Page", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
         button1 = tk.Button(self, text="Back to Home",
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        button2 = tk.Button(self, text="Page Two",
-                            command=lambda: controller.show_frame(PageTwo))
+        button2 = tk.Button(self, text="Show Running Config",
+                            command=lambda: controller.show_frame(ShowRunConfigPage))
         button2.pack()
+
+        button3 = tk.Button(self, text="Show IP Config",
+                            command=lambda: controller.show_frame(ShowIPConfigPage))
+        button3.pack()
 
 
 class PageTwo(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Page Two!!!", font=LARGE_FONT)
+        label = tk.Label(self, text="Configuration page", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
 
         button1 = tk.Button(self, text="Back to Home",
@@ -78,6 +92,42 @@ class PageTwo(tk.Frame):
         button2 = tk.Button(self, text="Page One",
                             command=lambda: controller.show_frame(PageOne))
         button2.pack()
+
+
+class ShowRunConfigPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="Running Configuration", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        conf_string = show_running_config()
+
+        txt_box = tk.Text(self)
+        txt_box.insert(1.0, conf_string)
+        txt_box.pack()
+
+        button1 = tk.Button(self, text="Back to Home",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
+
+
+class ShowIPConfigPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="IP Configuration", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        conf_string = show_ip_int()
+
+        txt_box = tk.Text(self)
+        txt_box.insert(1.0, conf_string)
+        txt_box.pack()
+
+        button1 = tk.Button(self, text="Back to Home",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
 
 
 app = WindowControl()
