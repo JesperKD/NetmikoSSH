@@ -78,13 +78,13 @@ def create_vlan(number, ip, mask):
         return False
 
 
-def setup_snmp():
+def setup_snmp(ro_name, rw_name):
     try:
         net_conn = Netmiko(**my_device)
         net_conn.enable()
         config_commands = [
-            f"snmp-server community public RO",
-            f"snmp-server community private RW",
+            f"snmp-server community {ro_name} RO",
+            f"snmp-server community {rw_name} RW",
             f"snmp-server host {client_ip} informs version 2c public",
             f"snmp-server host {client_ip} traps version 2c public",
             f"snmp-server enable traps bgp",
@@ -93,8 +93,11 @@ def setup_snmp():
 
         output = net_conn.send_config_set(config_commands)
         print(output + "\n SNMP has now been configured.")
+        return True
     except:
         print("Setting up SNMP failed.")
+        return False
+
 
 def catch_traps():
     os.system('python SNMPTrapReceiver.py')

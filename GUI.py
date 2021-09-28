@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from DeviceManager import show_ip_int
+from DeviceManager import setup_snmp
 from DeviceManager import create_vlan
+from DeviceManager import show_ip_int
 from DeviceManager import show_vlan_br
 from DeviceManager import show_running_config
 
@@ -23,7 +24,7 @@ class WindowControl(tk.Tk):
         self.frames = {}
 
         for F in (StartPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage,
-                  CreateVlanPage):
+                  CreateVlanPage, SetupSNMPPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -91,6 +92,10 @@ class ConfigPage(tk.Frame):
         button2 = tk.Button(self, text="Create Vlan",
                             command=lambda: controller.show_frame(CreateVlanPage))
         button2.pack()
+
+        button3 = tk.Button(self, text="Setup SNMP",
+                            command=lambda: controller.show_frame(SetupSNMPPage))
+        button3.pack()
 
 
 class ShowRunConfigPage(tk.Frame):
@@ -177,16 +182,48 @@ class CreateVlanPage(tk.Frame):
                                )
         submit_btn.pack()
 
-        button1 = tk.Button(self, text="Back",
-                            command=lambda: controller.show_frame(ConfigPage))
-        button1.pack()
+        back_btn = tk.Button(self, text="Back",
+                             command=lambda: controller.show_frame(ConfigPage))
+        back_btn.pack()
 
 
 def submit_vlan_data(vlan_num, vlan_ip, vlan_mask):
     if create_vlan(vlan_num, vlan_ip, vlan_mask):
         return messagebox.showinfo('message', f'Vlan {vlan_num} has been created.')
     else:
-        print("Vlan Error")
+        print("Vlan creation Error")
+
+
+class SetupSNMPPage(tk.Frame):
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="SNMP Setup", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        lbl_com_ro = tk.Label(self, text="Read Only Community key:")
+        ent_com_ro = tk.Entry(self)
+        lbl_com_ro.pack()
+        ent_com_ro.pack()
+
+        lbl_com_rw = tk.Label(self, text="Read and Write Community key:")
+        ent_com_rw = tk.Entry(self)
+        lbl_com_rw.pack()
+        ent_com_rw.pack()
+
+        submit_btn = tk.Button(self, text="Submit",
+                               command=lambda: submit_snmp_data(ent_com_ro.get(), ent_com_rw.get()))
+        submit_btn.pack()
+
+        back_btn = tk.Button(self, text="Back",
+                             command=lambda: controller.show_frame(ConfigPage))
+        back_btn.pack()
+
+
+def submit_snmp_data(ro_name, rw_name):
+    if setup_snmp(ro_name, rw_name):
+        return messagebox.showinfo('message', f'Snmp has been configured.')
+    else:
+        print("Vlan creation Error")
 
 
 app = WindowControl()
