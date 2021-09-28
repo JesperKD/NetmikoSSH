@@ -1,7 +1,7 @@
 import tkinter as tk
-from DeviceManager import show_running_config
 from DeviceManager import show_ip_int
 from DeviceManager import show_vlan_br
+from DeviceManager import show_running_config
 
 
 LARGE_FONT = ("Verdana", 12)
