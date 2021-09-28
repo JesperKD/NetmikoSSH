@@ -58,47 +58,41 @@ def mib_interface_table():
     print("Time elapsed: {}".format(end_time - start_time))
 
 
-def create_vlan():
-    number = input("Type your preferred vlan number: ")
-    ip = input("Type your preferred vlan Ip: ")
-    mask = input("Type the fitting Subnet mask: ")
+def create_vlan(number, ip, mask):
+    try:
+        net_conn = Netmiko(**my_device)
+        net_conn.enable()
 
-    start_time = datetime.now()
+        print("creating vlan {}".format(num))
 
-    connect_and_enable()
-
-    print("creating vlan {}".format(num))
-
-    config_commands = [
-        f"interface vlan {number}",
-        f"ip address {ip} {mask}",
-        "no shutdown"
-    ]
-    output = net_conn.send_config_set(config_commands)
-    print(output + "\n creation of vlan had concluded.")
-
-    end_time = datetime.now()
-    print("Time elapsed: {}".format(end_time - start_time))
+        config_commands = [
+            f"interface vlan {number}",
+            f"ip address {ip} {mask}",
+            "no shutdown"
+        ]
+        output = net_conn.send_config_set(config_commands)
+        return output + "\n creation of vlan has concluded."
+    except:
+        print("Creation of VLAN failed")
 
 
 def setup_snmp():
-    start_time = datetime.now()
-    connect_and_enable()
-    config_commands = [
-        f"snmp-server community public RO",
-        f"snmp-server community private RW",
-        f"snmp-server host {client_ip} informs version 2c public",
-        f"snmp-server host {client_ip} traps version 2c public",
-        f"snmp-server enable traps bgp",
-        f"logging trap 7"
-    ]
+    try:
+        net_conn = Netmiko(**my_device)
+        net_conn.enable()
+        config_commands = [
+            f"snmp-server community public RO",
+            f"snmp-server community private RW",
+            f"snmp-server host {client_ip} informs version 2c public",
+            f"snmp-server host {client_ip} traps version 2c public",
+            f"snmp-server enable traps bgp",
+            f"logging trap 7"
+        ]
 
-    output = net_conn.send_config_set(config_commands)
-    print(output + "\n SNMP has now been configured.")
-
-    end_time = datetime.now()
-    print("Time elapsed: {}".format(end_time - start_time))
-
+        output = net_conn.send_config_set(config_commands)
+        print(output + "\n SNMP has now been configured.")
+    except:
+        print("Setting up SNMP failed.")
 
 def catch_traps():
     os.system('python SNMPTrapReceiver.py')

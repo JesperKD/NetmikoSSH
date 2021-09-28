@@ -1,19 +1,11 @@
 import tkinter as tk
 from DeviceManager import show_ip_int
+from DeviceManager import create_vlan
 from DeviceManager import show_vlan_br
 from DeviceManager import show_running_config
 
 
 LARGE_FONT = ("Verdana", 12)
-
-
-def mirror_text(text):
-    mirror_point = int(len(text) / 2)
-    if mirror_point % 2 == 0:
-        res = text[:mirror_point]
-    else:
-        res = text[:mirror_point + 1]
-    return res + res[::-1]
 
 
 class WindowControl(tk.Tk):
@@ -29,7 +21,8 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage):
+        for F in (StartPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage,
+                  CreateVlanPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -94,8 +87,8 @@ class ConfigPage(tk.Frame):
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        button2 = tk.Button(self, text="Info Page",
-                            command=lambda: controller.show_frame(InfoPage))
+        button2 = tk.Button(self, text="Create Vlan",
+                            command=lambda: controller.show_frame(CreateVlanPage))
         button2.pack()
 
 
@@ -147,6 +140,41 @@ class ShowVlanConfigPage(tk.Frame):
         txt_box = tk.Text(self)
         txt_box.insert(1.0, conf_string)
         txt_box.pack()
+
+        button1 = tk.Button(self, text="Back",
+                            command=lambda: controller.show_frame(InfoPage))
+        button1.pack()
+
+
+class CreateVlanPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="IP Configuration", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        lbl_vlan_num = tk.Label(self, text="Vlan Number")
+        ent_vlan_num = tk.Entry(self)
+        lbl_vlan_num.pack()
+        ent_vlan_num.pack()
+
+        lbl_vlan_ip = tk.Label(self, text="Vlan IP")
+        ent_vlan_ip = tk.Entry(self)
+        lbl_vlan_ip.pack()
+        ent_vlan_ip.pack()
+
+        lbl_vlan_mask = tk.Label(self, text="Vlan Mask")
+        ent_vlan_mask = tk.Entry(self)
+        lbl_vlan_mask.pack()
+        ent_vlan_mask.pack()
+
+        vlan_num = ent_vlan_num.get()
+        vlan_ip = ent_vlan_ip.get()
+        vlan_mask = ent_vlan_mask.get()
+
+        enter_btn = tk.Button(self, text="submit",
+                              command=create_vlan(vlan_num, vlan_ip, vlan_mask))
+        enter_btn.pack()
 
         button1 = tk.Button(self, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
