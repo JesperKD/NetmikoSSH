@@ -19,20 +19,21 @@ my_device = {
 def show_running_config():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
-    print("Connected to device\n")
+    print("Connected to device\n Getting sh run\n")
     return net_conn.send_command_timing("show running-config")
 
 
 def show_vlan_br():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
+    print("Connected to device\n Getting sh vlan br\n")
     return net_conn.send_command_timing("show vlan brief")
 
 
 def show_ip_int():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
-    print("Connected to device\n")
+    print("Connected to device\n Getting ip int br\n")
     return net_conn.send_command_timing("show ip int br")
 
 

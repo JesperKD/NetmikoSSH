@@ -1,6 +1,7 @@
 import tkinter as tk
 from DeviceManager import show_running_config
 from DeviceManager import show_ip_int
+from DeviceManager import show_vlan_br
 
 
 LARGE_FONT = ("Verdana", 12)
@@ -28,7 +29,7 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, ShowRunConfigPage, ShowIPConfigPage):
+        for F in (StartPage, PageOne, PageTwo, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -77,6 +78,10 @@ class PageOne(tk.Frame):
                             command=lambda: controller.show_frame(ShowIPConfigPage))
         button3.pack()
 
+        button4 = tk.Button(self, text="Show VLAN Config",
+                            command=lambda: controller.show_frame(ShowVlanConfigPage))
+        button4.pack()
+
 
 class PageTwo(tk.Frame):
 
@@ -120,6 +125,24 @@ class ShowIPConfigPage(tk.Frame):
         label.pack(pady=10, padx=10)
 
         conf_string = show_ip_int()
+
+        txt_box = tk.Text(self)
+        txt_box.insert(1.0, conf_string)
+        txt_box.pack()
+
+        button1 = tk.Button(self, text="Back to Home",
+                            command=lambda: controller.show_frame(StartPage))
+        button1.pack()
+
+
+class ShowVlanConfigPage(tk.Frame):
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="IP Configuration", font=LARGE_FONT)
+        label.pack(pady=10, padx=10)
+
+        conf_string = show_vlan_br()
 
         txt_box = tk.Text(self)
         txt_box.insert(1.0, conf_string)
