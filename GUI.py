@@ -29,7 +29,7 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
-        for F in (StartPage, PageOne, PageTwo, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage):
+        for F in (StartPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage):
             frame = F(container, self)
 
             self.frames[F] = frame
@@ -51,15 +51,15 @@ class StartPage(tk.Frame):
         label.pack(pady=10, padx=10)
 
         button = tk.Button(self, text="Information Page",
-                           command=lambda: controller.show_frame(PageOne))
+                           command=lambda: controller.show_frame(InfoPage))
         button.pack()
 
         button2 = tk.Button(self, text="Configuration Page",
-                            command=lambda: controller.show_frame(PageTwo))
+                            command=lambda: controller.show_frame(ConfigPage))
         button2.pack()
 
 
-class PageOne(tk.Frame):
+class InfoPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -83,7 +83,7 @@ class PageOne(tk.Frame):
         button4.pack()
 
 
-class PageTwo(tk.Frame):
+class ConfigPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
@@ -94,8 +94,8 @@ class PageTwo(tk.Frame):
                             command=lambda: controller.show_frame(StartPage))
         button1.pack()
 
-        button2 = tk.Button(self, text="Page One",
-                            command=lambda: controller.show_frame(PageOne))
+        button2 = tk.Button(self, text="Info Page",
+                            command=lambda: controller.show_frame(InfoPage))
         button2.pack()
 
 
@@ -112,8 +112,8 @@ class ShowRunConfigPage(tk.Frame):
         txt_box.insert(1.0, conf_string)
         txt_box.pack()
 
-        button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
+        button1 = tk.Button(self, text="Back",
+                            command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
 
@@ -130,8 +130,8 @@ class ShowIPConfigPage(tk.Frame):
         txt_box.insert(1.0, conf_string)
         txt_box.pack()
 
-        button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
+        button1 = tk.Button(self, text="Back",
+                            command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
 
@@ -148,8 +148,8 @@ class ShowVlanConfigPage(tk.Frame):
         txt_box.insert(1.0, conf_string)
         txt_box.pack()
 
-        button1 = tk.Button(self, text="Back to Home",
-                            command=lambda: controller.show_frame(StartPage))
+        button1 = tk.Button(self, text="Back",
+                            command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
 
