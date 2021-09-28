@@ -118,13 +118,13 @@ class ShowRunConfigPage(tk.Frame):
         button1.pack()
 
 
-def update_txt_box(txt_box, type):
+def update_txt_box(txt_box, conf_type):
     txt_box.delete('1.0', tk.END)
-    if type == 1:
+    if conf_type == 1:
         txt_box.insert(1.0, show_running_config())
-    elif type == 2:
+    elif conf_type == 2:
         txt_box.insert(1.0, show_ip_int())
-    elif type == 3:
+    elif conf_type == 3:
         txt_box.insert(1.0, show_vlan_br())
 
 
