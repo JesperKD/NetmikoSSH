@@ -69,7 +69,7 @@ def confirm_connection(confirm_btn, continue_btn, cli_ip, dev_ip):
         confirm_btn.pack_forget()
         return messagebox.showinfo('message', f'Connection confirmed!')
     else:
-        return messagebox.showinfo('message', f'Connection failed, try again.')
+        return messagebox.showinfo('Error', f'Connection failed, make sure the info is correct.')
 
 
 class MenuPage(tk.Frame):
