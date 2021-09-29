@@ -55,7 +55,7 @@ def show_ip_int():
     return net_conn.send_command_timing("show ip int br")
 
 
-# Returns the mib version of the interface table of the given device
+# Returns the mib interface table of the given device
 def mib_interface_table():
     start_time = datetime.now()
     error_indication, error_status, error_index, var_bind_table = cmdGen.bulkCmd(
