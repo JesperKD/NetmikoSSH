@@ -70,16 +70,6 @@ class StartPage(tk.Frame):
                                  command=lambda: controller.show_frame(MenuPage))
 
 
-# removes "confirm" button" and shows "continue" button if connection is valid
-def confirm_connection(confirm_btn, continue_btn, cli_ip, dev_ip):
-    if check_connection(dev_ip, cli_ip):
-        continue_btn.pack()
-        confirm_btn.pack_forget()
-        return messagebox.showinfo('message', f'Connection confirmed!')
-    else:
-        return messagebox.showinfo('Error', f'Connection failed, make sure the info is correct.')
-
-
 class MenuPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -160,17 +150,6 @@ class ShowRunConfigPage(tk.Frame):
         button1.pack()
 
 
-# Clears a given textbox and inserts newly gathered data
-def update_txt_box(txt_box, conf_type):
-    txt_box.delete('1.0', tk.END)
-    if conf_type == 1:
-        txt_box.insert(1.0, show_running_config())
-    elif conf_type == 2:
-        txt_box.insert(1.0, show_ip_int())
-    elif conf_type == 3:
-        txt_box.insert(1.0, show_vlan_br())
-
-
 class ShowIPConfigPage(tk.Frame):
 
     def __init__(self, parent, controller):
@@ -246,13 +225,6 @@ class CreateVlanPage(tk.Frame):
         back_btn.pack()
 
 
-def submit_vlan_data(vlan_num, vlan_ip, vlan_mask):
-    if create_vlan(vlan_num, vlan_ip, vlan_mask):
-        return messagebox.showinfo('message', f'Vlan {vlan_num} has been created.')
-    else:
-        print("Vlan creation Error")
-
-
 class SetupSNMPPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg=BG_COLOR)
@@ -278,6 +250,46 @@ class SetupSNMPPage(tk.Frame):
         back_btn.pack()
 
 
+# Checks if connection is valid
+def confirm_connection(confirm_btn, continue_btn, cli_ip, dev_ip):
+    if check_connection(dev_ip, cli_ip):
+        show_btn(continue_btn)
+        hide_btn(confirm_btn)
+        return messagebox.showinfo('message', f'Connection confirmed!')
+    else:
+        return messagebox.showinfo('Error', f'Connection failed, make sure the info is correct.')
+
+
+# hides a given button
+def hide_btn(btn):
+    btn.pack_forget()
+
+
+# shows a given button
+def show_btn(btn):
+    btn.pack()
+
+
+# Clears a given textbox and inserts newly gathered data depending on type
+def update_txt_box(txt_box, conf_type):
+    txt_box.delete('1.0', tk.END)
+    if conf_type == 1:
+        txt_box.insert(1.0, show_running_config())
+    elif conf_type == 2:
+        txt_box.insert(1.0, show_ip_int())
+    elif conf_type == 3:
+        txt_box.insert(1.0, show_vlan_br())
+
+
+# Submit given data for vlan creation
+def submit_vlan_data(vlan_num, vlan_ip, vlan_mask):
+    if create_vlan(vlan_num, vlan_ip, vlan_mask):
+        return messagebox.showinfo('message', f'Vlan {vlan_num} has been created.')
+    else:
+        print("Vlan creation Error")
+
+
+# Submit given data for SNMP setup
 def submit_snmp_data(ro_name, rw_name):
     if setup_snmp(ro_name, rw_name):
         return messagebox.showinfo('message', f'Snmp has been configured.')
