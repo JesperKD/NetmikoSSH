@@ -4,6 +4,7 @@ from netmiko import Netmiko
 import pysnmp.entity.engine
 from datetime import datetime
 
+# IP Values for SSH connection to network device
 client_ip = ""
 device_ip = ""
 
