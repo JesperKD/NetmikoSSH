@@ -50,6 +50,8 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="Start Page", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
+        connection_works = False
+
         # entry widget with fitting label to indicate the expected data
         lbl_client_ip = tk.Label(self, text="Client IP", bg=BG_COLOR, fg=TXT_COLOR)
         ent_client_ip = tk.Entry(self)
@@ -141,7 +143,7 @@ class ShowRunConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
                                command=lambda: update_txt_box(txt_box, 1))
         update_btn.pack()
 
@@ -161,7 +163,7 @@ class ShowIPConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
                                command=lambda: update_txt_box(txt_box, 2))
         update_btn.pack()
 
@@ -181,7 +183,7 @@ class ShowVlanConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
                                command=lambda: update_txt_box(txt_box, 3))
         update_btn.pack()
 
@@ -194,7 +196,7 @@ class CreateVlanPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg=BG_COLOR)
-        label = tk.Label(self, text="IP Configuration", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
+        label = tk.Label(self, text="Create Vlan", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
         lbl_vlan_num = tk.Label(self, text="Vlan Number", bg=BG_COLOR, border=0, fg=TXT_COLOR)
