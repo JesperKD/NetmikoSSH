@@ -4,16 +4,16 @@ from netmiko import Netmiko
 import pysnmp.entity.engine
 from datetime import datetime
 
-device_ip = "10.0.3.24"
-client_ip = "10.0.3.15"
+client_ip = ""
+device_ip = ""
 
 # Properties for the network device in question
 my_device = {
-    'host': f"{device_ip}",
-    'username': "ciscoclass",
-    'password': "kage",
-    'secret': "class",
-    'device_type': 'cisco_ios'
+        'host': "",
+        'username': "",
+        'password': "",
+        'secret': "",
+        'device_type': ''
 }
 
 
@@ -24,11 +24,23 @@ def check_connection(dev_ip, cli_ip):
         global client_ip
         device_ip = dev_ip
         client_ip = cli_ip
+        set_device_properties()
         net_conn = Netmiko(**my_device)
         net_conn.enable()
         return True
     except:
         return False
+
+
+def set_device_properties():
+    global my_device
+    my_device = {
+        'host': f"{device_ip}",
+        'username': "ciscoclass",
+        'password': "kage",
+        'secret': "class",
+        'device_type': 'cisco_ios'
+    }
 
 
 # Returns the running configuration of the given device
