@@ -57,12 +57,12 @@ class StartPage(tk.Frame):
         lbl_device_ip.pack()
         ent_device_ip.pack()
 
-        confirm_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Confirm",
+        confirm_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Confirm",
                                 command=lambda: confirm_connection(confirm_btn, continue_btn, ent_client_ip.get(),
                                                                    ent_device_ip.get()))
         confirm_btn.pack()
 
-        continue_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Continue",
+        continue_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Continue",
                                  command=lambda: controller.show_frame(MenuPage))
 
 
@@ -82,11 +82,11 @@ class MenuPage(tk.Frame):
         label = tk.Label(self, text="Menu", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
-        button = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Information Page",
+        button = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Information Page",
                            command=lambda: controller.show_frame(InfoPage))
         button.pack()
 
-        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Configuration Page",
+        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Configuration Page",
                             command=lambda: controller.show_frame(ConfigPage))
         button2.pack()
 
@@ -98,19 +98,19 @@ class InfoPage(tk.Frame):
         label = tk.Label(self, text="Information Page", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back to Home",
+        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back to Home",
                             command=lambda: controller.show_frame(MenuPage))
         button1.pack()
 
-        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Show Running Config",
+        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Show Running Config",
                             command=lambda: controller.show_frame(ShowRunConfigPage))
         button2.pack()
 
-        button3 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Show IP Config",
+        button3 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Show IP Config",
                             command=lambda: controller.show_frame(ShowIPConfigPage))
         button3.pack()
 
-        button4 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Show VLAN Config",
+        button4 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Show VLAN Config",
                             command=lambda: controller.show_frame(ShowVlanConfigPage))
         button4.pack()
 
@@ -122,15 +122,15 @@ class ConfigPage(tk.Frame):
         label = tk.Label(self, text="Configuration page", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
-        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back to Home",
+        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back to Home",
                             command=lambda: controller.show_frame(MenuPage))
         button1.pack()
 
-        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Create Vlan",
+        button2 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Create Vlan",
                             command=lambda: controller.show_frame(CreateVlanPage))
         button2.pack()
 
-        button3 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Setup SNMP",
+        button3 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Setup SNMP",
                             command=lambda: controller.show_frame(SetupSNMPPage))
         button3.pack()
 
@@ -146,11 +146,11 @@ class ShowRunConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
                                command=lambda: update_txt_box(txt_box, 1))
         update_btn.pack()
 
-        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back",
+        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
@@ -176,11 +176,11 @@ class ShowIPConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
                                command=lambda: update_txt_box(txt_box, 2))
         update_btn.pack()
 
-        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back",
+        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
@@ -196,11 +196,11 @@ class ShowVlanConfigPage(tk.Frame):
         txt_box.config(state="normal")
         txt_box.pack()
 
-        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Update",
+        update_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Update",
                                command=lambda: update_txt_box(txt_box, 3))
         update_btn.pack()
 
-        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back",
+        button1 = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back",
                             command=lambda: controller.show_frame(InfoPage))
         button1.pack()
 
@@ -212,17 +212,17 @@ class CreateVlanPage(tk.Frame):
         label = tk.Label(self, text="IP Configuration", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
-        lbl_vlan_num = tk.Label(self, text="Vlan Number", bg=BG_COLOR, fg=TXT_COLOR)
+        lbl_vlan_num = tk.Label(self, text="Vlan Number", bg=BG_COLOR, border=0, fg=TXT_COLOR)
         ent_vlan_num = tk.Entry(self)
         lbl_vlan_num.pack()
         ent_vlan_num.pack()
 
-        lbl_vlan_ip = tk.Label(self, text="Vlan IP", bg=BG_COLOR, fg=TXT_COLOR)
+        lbl_vlan_ip = tk.Label(self, text="Vlan IP", bg=BG_COLOR, border=0, fg=TXT_COLOR)
         ent_vlan_ip = tk.Entry(self)
         lbl_vlan_ip.pack()
         ent_vlan_ip.pack()
 
-        lbl_vlan_mask = tk.Label(self, text="Vlan Mask", bg=BG_COLOR, fg=TXT_COLOR)
+        lbl_vlan_mask = tk.Label(self, text="Vlan Mask", bg=BG_COLOR, border=0, fg=TXT_COLOR)
         ent_vlan_mask = tk.Entry(self)
         lbl_vlan_mask.pack()
         ent_vlan_mask.pack()
@@ -235,7 +235,7 @@ class CreateVlanPage(tk.Frame):
                                )
         submit_btn.pack()
 
-        back_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back",
+        back_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back",
                              command=lambda: controller.show_frame(ConfigPage))
         back_btn.pack()
 
@@ -267,7 +267,7 @@ class SetupSNMPPage(tk.Frame):
                                command=lambda: submit_snmp_data(ent_com_ro.get(), ent_com_rw.get()))
         submit_btn.pack()
 
-        back_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, text="Back",
+        back_btn = tk.Button(self, fg=TXT_COLOR, bg=BTN_COLOR, border=0, text="Back",
                              command=lambda: controller.show_frame(ConfigPage))
         back_btn.pack()
 
