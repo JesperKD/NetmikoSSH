@@ -4,8 +4,8 @@ from netmiko import Netmiko
 import pysnmp.entity.engine
 from datetime import datetime
 
-device_ip = "192.168.0.2"
-client_ip = "192.168.0.3"
+device_ip = "10.0.3.24"
+client_ip = "10.0.3.15"
 
 my_device = {
     'host': f"{device_ip}",
