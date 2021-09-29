@@ -1,4 +1,3 @@
-# python snmp trap receiver
 import os
 import logging
 from datetime import date
