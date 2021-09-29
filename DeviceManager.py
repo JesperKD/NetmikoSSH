@@ -7,6 +7,7 @@ from datetime import datetime
 device_ip = "10.0.3.24"
 client_ip = "10.0.3.15"
 
+# Properties for the network device in question
 my_device = {
     'host': f"{device_ip}",
     'username': "ciscoclass",
@@ -16,6 +17,7 @@ my_device = {
 }
 
 
+# Returns true if a connection can be established
 def check_connection(dev_ip, cli_ip):
     try:
         global device_ip
@@ -29,6 +31,7 @@ def check_connection(dev_ip, cli_ip):
         return False
 
 
+# Returns the running configuration of the given device
 def show_running_config():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
@@ -36,6 +39,7 @@ def show_running_config():
     return net_conn.send_command_timing("show running-config")
 
 
+# Returns the VLAN configuration of the given device
 def show_vlan_br():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
@@ -43,6 +47,7 @@ def show_vlan_br():
     return net_conn.send_command_timing("show vlan brief")
 
 
+# Returns the IP configuration of the given device
 def show_ip_int():
     net_conn = Netmiko(**my_device)
     net_conn.enable()
@@ -50,10 +55,7 @@ def show_ip_int():
     return net_conn.send_command_timing("show ip int br")
 
 
-def cb_fun(snmp_engine, send_request_handle, error_indication, error_status, error_index, var_binds, cb_ctx):
-    print(error_indication, error_status, error_index, var_binds)
-
-
+# Returns the mib version of the interface table of the given device
 def mib_interface_table():
     start_time = datetime.now()
     error_indication, error_status, error_index, var_bind_table = cmdGen.bulkCmd(
@@ -71,6 +73,7 @@ def mib_interface_table():
     print("Time elapsed: {}".format(end_time - start_time))
 
 
+# Creates a vlan with given parameters
 def create_vlan(number, ip, mask):
     try:
         net_conn = Netmiko(**my_device)
@@ -91,6 +94,7 @@ def create_vlan(number, ip, mask):
         return False
 
 
+# Sets up SNMP with the given parameters
 def setup_snmp(ro_name, rw_name):
     try:
         net_conn = Netmiko(**my_device)
@@ -112,5 +116,6 @@ def setup_snmp(ro_name, rw_name):
         return False
 
 
+# Continuously checks on a port for SNMP Trap messages
 def catch_traps():
     os.system('python SNMPTrapReceiver.py')

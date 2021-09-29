@@ -7,6 +7,7 @@ from DeviceManager import show_vlan_br
 from DeviceManager import check_connection
 from DeviceManager import show_running_config
 
+# Style properties
 LARGE_FONT = ("Verdana", 16)
 BG_COLOR = "#382B5C"
 BTN_COLOR = "#271E40"
@@ -26,6 +27,7 @@ class WindowControl(tk.Tk):
 
         self.frames = {}
 
+        # Preloads all frames/pages
         for F in (StartPage, MenuPage, InfoPage, ConfigPage, ShowRunConfigPage, ShowIPConfigPage, ShowVlanConfigPage,
                   CreateVlanPage, SetupSNMPPage):
             frame = F(container, self)
@@ -36,6 +38,7 @@ class WindowControl(tk.Tk):
 
         self.show_frame(StartPage)
 
+    # function to display a given frame/page
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
@@ -47,6 +50,7 @@ class StartPage(tk.Frame):
         label = tk.Label(self, text="Start Page", font=LARGE_FONT, fg=TXT_COLOR, bg=BG_COLOR)
         label.pack(pady=10, padx=10)
 
+        # entry widget with fitting label to indicate the expected data
         lbl_client_ip = tk.Label(self, text="Client IP", bg=BG_COLOR, fg=TXT_COLOR)
         ent_client_ip = tk.Entry(self)
         lbl_client_ip.pack()
@@ -66,6 +70,7 @@ class StartPage(tk.Frame):
                                  command=lambda: controller.show_frame(MenuPage))
 
 
+# removes "confirm" button" and shows "continue" button if connection is valid
 def confirm_connection(confirm_btn, continue_btn, cli_ip, dev_ip):
     if check_connection(dev_ip, cli_ip):
         continue_btn.pack()
@@ -155,6 +160,7 @@ class ShowRunConfigPage(tk.Frame):
         button1.pack()
 
 
+# Clears a given textbox and inserts newly gathered data
 def update_txt_box(txt_box, conf_type):
     txt_box.delete('1.0', tk.END)
     if conf_type == 1:
@@ -279,5 +285,6 @@ def submit_snmp_data(ro_name, rw_name):
         print("Vlan creation Error")
 
 
+# Runs the GUI
 app = WindowControl()
 app.mainloop()
